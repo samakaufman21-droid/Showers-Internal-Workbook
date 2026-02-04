@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patriot Showers - Measurement Workbook</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header matching pricing tool -->
+        <div class="header">
+            <div class="logo-text">patriotshowers.com</div>
+            <div class="logo-underline"></div>
+            <div class="subtitle">Measurement Workbook Tool</div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="card progress-card">
+            <div class="progress-steps">
+                <div class="progress-line" id="progressLine"></div>
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Job Info</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Shower Type</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Photos</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Measurements</div>
+                </div>
+                <div class="step" data-step="5">
+                    <div class="step-number">5</div>
+                    <div class="step-label">Conditions</div>
+                </div>
+                <div class="step" data-step="6">
+                    <div class="step-number">6</div>
+                    <div class="step-label">Review</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Job Information -->
+        <div class="card" id="section1">
+            <h2 class="section-title">Job Information</h2>
+            <p class="section-description">Basic information about this measurement job</p>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Sales Rep Name <span class="required">*</span></label>
+                    <input type="text" id="repName" required>
+                </div>
+                <div class="form-group">
+                    <label>Date <span class="required">*</span></label>
+                    <input type="text" id="measureDate" required readonly>
+                </div>
+                <div class="form-group">
+                    <label>Customer Name <span class="required">*</span></label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Customer Phone</label>
+                    <input type="tel" id="customerPhone">
+                </div>
+                <div class="form-group">
+                    <label>Customer Email</label>
+                    <input type="email" id="customerEmail">
+                </div>
+                <div class="form-group">
+                    <label>Job Address <span class="required">*</span></label>
+                    <input type="text" id="jobAddress" required>
+                </div>
+            </div>
+
+            <button class="btn-add" onclick="nextSection(1)">Next: Shower Type →</button>
+        </div>
+
+        <!-- Section 2: Shower Type & Configuration -->
+        <div class="card section-hidden" id="section2">
+            <h2 class="section-title">Shower Type & Configuration</h2>
+            <p class="section-description">Identify the existing shower type and desired configuration</p>
+
+            <h3 class="subsection-title">Existing Shower Type</h3>
+            <div class="radio-group" id="showerTypeGroup">
+                <label class="radio-item">
+                    <input type="radio" name="showerType" value="standard" onchange="updateShowerType()">
+                    <span>Standard Tub/Shower</span>
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="showerType" value="california" onchange="updateShowerType()">
+                    <span>California Shower</span>
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="showerType" value="walk-in" onchange="updateShowerType()">
+                    <span>Walk-In Shower</span>
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="showerType" value="corner" onchange="updateShowerType()">
+                    <span>Corner Shower</span>
+                </label>
+            </div>
+
+            <h3 class="subsection-title">New Configuration</h3>
+            <div class="radio-group" id="newConfigGroup">
+                <label class="radio-item">
+                    <input type="radio" name="newConfig" value="same">
+                    <span>Keep Same Layout</span>
+                </label>
+                <label class="radio-item">
+                    <input type="radio" name="newConfig" value="convert">
+                    <span>Convert Layout</span>
+                </label>
+            </div>
+
+            <h3 class="subsection-title">Site Conditions</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Floor Level</label>
+                    <select id="floorLevel">
+                        <option value="">Select...</option>
+                        <option value="B">Basement</option>
+                        <option value="1">1st Floor</option>
+                        <option value="2">2nd Floor</option>
+                        <option value="3">3rd Floor</option>
+                        <option value="4">4th Floor</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Current Base Type</label>
+                    <select id="baseType">
+                        <option value="">Select...</option>
+                        <option value="cast-iron">Cast Iron</option>
+                        <option value="steel">Steel</option>
+                        <option value="fiberglass">Fiberglass</option>
+                        <option value="plastic">Plastic</option>
+                        <option value="tile">Tile</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Drain Location</label>
+                    <select id="drainLocation">
+                        <option value="">Select...</option>
+                        <option value="L">Left</option>
+                        <option value="C">Center</option>
+                        <option value="R">Right</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="checkbox-grid">
+                <label class="checkbox-item">
+                    <input type="checkbox" id="drainAccess">
+                    <span>Drain Access Underneath</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="movingDrain">
+                    <span>Moving Drain in Floor</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="concreteSub">
+                    <span>Concrete Sub-floor</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="postTension">
+                    <span>Post Tension Slab</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="fourthWall">
+                    <span>4th Wall or Header</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="manufacturedHome">
+                    <span>Manufactured Home</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="condo">
+                    <span>Condo/Co-op</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="windowInWet">
+                    <span>Window Inside Wet Area</span>
+                </label>
+            </div>
+
+            <div class="form-group section-hidden" id="windowDimensionsGroup">
+                <label>Window Dimensions (if applicable)</label>
+                <div class="form-grid">
+                    <input type="text" id="windowHeight" placeholder="Height">
+                    <input type="text" id="windowWidth" placeholder="Width">
+                    <input type="text" id="windowToCeiling" placeholder="Distance to Ceiling">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousSection(2)">← Back</button>
+                <button class="btn-add" onclick="nextSection(2)">Next: Photos →</button>
+            </div>
+        </div>
+
+        <!-- Section 3: Photos -->
+        <div class="card section-hidden" id="section3">
+            <h2 class="section-title">Photo Documentation</h2>
+            <p class="section-description">Upload photos of all required areas - tap each box to add photos</p>
+
+            <h3 class="subsection-title">Bathroom Overview</h3>
+            <div class="photo-grid">
+                <div class="photo-upload-box" onclick="document.getElementById('photoBathroomEntry').click()">
+                    <input type="file" id="photoBathroomEntry" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewBathroomEntry')">
+                    <div id="previewBathroomEntry">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Bathroom Entry</div>
+                        <div class="photo-instruction">Full view from doorway</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoFloorLine').click()">
+                    <input type="file" id="photoFloorLine" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewFloorLine')">
+                    <div id="previewFloorLine">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Base & Floor Line</div>
+                        <div class="photo-instruction">Show base and floor transition</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Shower Interior - Corner Views</h3>
+            <div class="photo-grid">
+                <div class="photo-upload-box" onclick="document.getElementById('photoBottomRight').click()">
+                    <input type="file" id="photoBottomRight" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewBottomRight')">
+                    <div id="previewBottomRight">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Bottom Right Corner</div>
+                        <div class="photo-instruction">Floor to mid-wall, right side</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoTopRight').click()">
+                    <input type="file" id="photoTopRight" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewTopRight')">
+                    <div id="previewTopRight">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Top Right Corner</div>
+                        <div class="photo-instruction">Mid-wall to ceiling, right side</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoBottomLeft').click()">
+                    <input type="file" id="photoBottomLeft" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewBottomLeft')">
+                    <div id="previewBottomLeft">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Bottom Left Corner</div>
+                        <div class="photo-instruction">Floor to mid-wall, left side</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoTopLeft').click()">
+                    <input type="file" id="photoTopLeft" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewTopLeft')">
+                    <div id="previewTopLeft">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Top Left Corner</div>
+                        <div class="photo-instruction">Mid-wall to ceiling, left side</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Measurements & Infrastructure</h3>
+            <div class="photo-grid">
+                <div class="photo-upload-box" onclick="document.getElementById('photoBMeasurement').click()">
+                    <input type="file" id="photoBMeasurement" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewBMeasurement')">
+                    <div id="previewBMeasurement">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">B Measurement</div>
+                        <div class="photo-instruction">Show tape measure depth</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoCurbToToilet').click()">
+                    <input type="file" id="photoCurbToToilet" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewCurbToToilet')">
+                    <div id="previewCurbToToilet">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Curb to Toilet Distance</div>
+                        <div class="photo-instruction">Measure curb to toilet center</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoWaterShutoff').click()">
+                    <input type="file" id="photoWaterShutoff" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewWaterShutoff')">
+                    <div id="previewWaterShutoff">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Water Shut-off Valve</div>
+                        <div class="photo-instruction">Location and accessibility</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoElectricalPanel').click()">
+                    <input type="file" id="photoElectricalPanel" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewElectricalPanel')">
+                    <div id="previewElectricalPanel">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Electrical Panel</div>
+                        <div class="photo-instruction">Main panel location</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Special Conditions (if applicable)</h3>
+            <div class="photo-grid">
+                <div class="photo-upload-box" onclick="document.getElementById('photoWindow').click()">
+                    <input type="file" id="photoWindow" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewWindow')">
+                    <div id="previewWindow">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Window (if present)</div>
+                        <div class="photo-instruction">Show position in wet area</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoPostTension').click()">
+                    <input type="file" id="photoPostTension" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewPostTension')">
+                    <div id="previewPostTension">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Post Tension Stamp</div>
+                        <div class="photo-instruction">If visible in garage/basement</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Additional Photos</h3>
+            <div class="photo-grid">
+                <div class="photo-upload-box" onclick="document.getElementById('photoMisc1').click()">
+                    <input type="file" id="photoMisc1" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewMisc1')">
+                    <div id="previewMisc1">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Additional Photo 1</div>
+                        <div class="photo-instruction">Any damage or special conditions</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoMisc2').click()">
+                    <input type="file" id="photoMisc2" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewMisc2')">
+                    <div id="previewMisc2">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Additional Photo 2</div>
+                        <div class="photo-instruction">Optional</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoMisc3').click()">
+                    <input type="file" id="photoMisc3" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewMisc3')">
+                    <div id="previewMisc3">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Additional Photo 3</div>
+                        <div class="photo-instruction">Optional</div>
+                    </div>
+                </div>
+                <div class="photo-upload-box" onclick="document.getElementById('photoMisc4').click()">
+                    <input type="file" id="photoMisc4" accept="image/*" style="display: none;" onchange="handlePhotoUpload(this, 'previewMisc4')">
+                    <div id="previewMisc4">
+                        <div class="upload-icon">📷</div>
+                        <div class="photo-label">Additional Photo 4</div>
+                        <div class="photo-instruction">Optional</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousSection(3)">← Back</button>
+                <button class="btn-add" onclick="nextSection(3)">Next: Measurements →</button>
+            </div>
+        </div>
+
+        <!-- Section 4: Measurements -->
+        <div class="card section-hidden" id="section4">
+            <h2 class="section-title">Measurements</h2>
+            <p class="section-description">Record all measurements in inches (e.g., 60, 72.5)</p>
+
+            <div class="alert-info">
+                <strong>Measurement Tips:</strong> Measure from the same reference points shown in your photos. 
+                Double-check critical measurements like A (width), B (depth), and D (height).
+            </div>
+
+            <div class="table-responsive">
+                <table class="measurements-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Existing</th>
+                            <th>New</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A</strong></td>
+                            <td>Side to side (width), measuring from center of system if possible</td>
+                            <td><input type="number" id="measExistingA" step="0.125" placeholder="inches"></td>
+                            <td><input type="number" id="measNewA" step="0.125" placeholder="inches"></td>
+                            <td><input type="text" id="notesA" placeholder="Optional"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>B</strong></td>
+                            <td>From back to furthest point out on existing base</td>
+                            <td><input type="number" id="measExistingB" step="0.125" placeholder="inches"></td>
+                            <td><input type="number" id="measNewB" step="0.125" placeholder="inches"></td>
+                            <td><input type="text" id="notesB" placeholder="Optional"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>C</strong></td>
+                            <td>From back to first obstruction or corner - right</td>
+                            <td><input type="number" id="measExistingC" step="0.125" placeholder="inches"></td>
+                            <td><input type="number" id="measNewC" step="0.125" placeholder="inches"></td>
+                            <td><input type="text" id="notesC" placeholder="Optional"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>C2</strong></td>
+                            <td>From back to furthest point of existing surround - right</td>
+                            <td><input type="number" id="measExistingC2" step="0.125" placeholder="inches"></td>
+                            <td><input type="number" id="measNewC2" step="0.125" placeholder="inches"></td>
+                            <td><input type="text" id="notesC2" placeholder="Optional"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>D</strong></td>
+                            <td>Height from floor to ceiling within wet area</td>
+                            <td><input type="number" id="measExistingD" step="0.125" placeholder="inches"></td>
+                            <td><input type="number" id="measNewD" step="0.125" placeholder="inches"></td>
+                            <td><input type="text" id="notesD" placeholder="Optional"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>E</strong></td>
+                            <td>From back to first obstruction or corner - left</td>
+                            <td><input type="number" id="measExistingE" step="0.125" placeholder="inches"></td>
+                            <td><input type="number" id="measNewE" step="0.125" placeholder="inches"></td>
+                            <td><input type="text" id="notesE" placeholder="Optional"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>E2</strong></td>
+                            <td>From back to furthest point of existing surround - left</td>
+                            <td><input type="number" id="measExistingE2" step="0.125" placeholder="inches"></td>
+                            <td><input type="number" id="measNewE2" step="0.125" placeholder="inches"></td>
+                            <td><input type="text" id="notesE2" placeholder="Optional"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>F</strong></td>
+                            <td>From back to ceiling panel projection</td>
+                            <td><input type="number" id="measExistingF" step="0.125" placeholder="inches"></td>
+                            <td><input type="number" id="measNewF" step="0.125" placeholder="inches"></td>
+                            <td><input type="text" id="notesF" placeholder="Optional"></td>
+                        </tr>
+                        <tr>
+                            <td><strong>G</strong></td>
+                            <td>From ceiling to bottom of soffit</td>
+                            <td><input type="number" id="measExistingG" step="0.125" placeholder="inches"></td>
+                            <td><input type="number" id="measNewG" step="0.125" placeholder="inches"></td>
+                            <td><input type="text" id="notesG" placeholder="Optional"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="subsection-title">Additional Measurements (if applicable)</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Distance between base and center of toilet</label>
+                    <input type="number" id="measBaseToToilet" step="0.125" placeholder="inches">
+                </div>
+                <div class="form-group">
+                    <label>New surround height (if specified)</label>
+                    <input type="number" id="measNewSurroundHeight" step="0.125" placeholder="inches">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousSection(4)">← Back</button>
+                <button class="btn-add" onclick="nextSection(4)">Next: Site Conditions →</button>
+            </div>
+        </div>
+
+        <!-- Section 5: Site Conditions & Notes -->
+        <div class="card section-hidden" id="section5">
+            <h2 class="section-title">Site Conditions & Installation Notes</h2>
+            <p class="section-description">Document any issues or special conditions that may affect installation</p>
+
+            <h3 class="subsection-title">Visible Issues (check all that apply)</h3>
+            <div class="checkbox-grid">
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueMold">
+                    <span>Mold / Mildew Present</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueNoGrabBars">
+                    <span>No Safety Grab Bars</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueNoAntiSlip">
+                    <span>No Anti-Slip Base</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueFailingCaulk">
+                    <span>Failing Caulk</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueCrackedGrout">
+                    <span>Cracked Grout</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueStaining">
+                    <span>Staining / Fading / Cracking</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueWaterDamage">
+                    <span>Water Damage</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueFailedDrain">
+                    <span>Failed 30 sec Drain Test (pooling)</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueTempPressure">
+                    <span>Temperature/Pressure Changes</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="issueLeaking">
+                    <span>Leaking</span>
+                </label>
+            </div>
+
+            <h3 class="subsection-title">Structural & Subfloor Concerns</h3>
+            <div class="form-group">
+                <label>Describe any structural issues, subfloor damage, or concerns</label>
+                <textarea id="structuralNotes" placeholder="E.g., Soft spots in floor, visible water damage behind walls, rotted framing, foundation concerns..."></textarea>
+            </div>
+
+            <h3 class="subsection-title">Access & Logistics</h3>
+            <div class="form-group">
+                <label>Access notes (stairs, hallways, doorways, parking)</label>
+                <textarea id="accessNotes" placeholder="E.g., Narrow stairway to 2nd floor, must remove door, limited parking..."></textarea>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Preferred installation date (if discussed)</label>
+                    <input type="text" id="preferredInstallDate">
+                </div>
+                <div class="form-group">
+                    <label>Best contact time for customer</label>
+                    <input type="text" id="bestContactTime">
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Customer Requests & Special Instructions</h3>
+            <div class="form-group">
+                <label>Customer specific requests or concerns for install day</label>
+                <textarea id="customerRequests" placeholder="E.g., Must protect hardwood floors, pet will be present, need to park in driveway, HOA requirements, specific color preferences..."></textarea>
+            </div>
+
+            <h3 class="subsection-title">Additional Site Notes</h3>
+            <div class="form-group">
+                <label>Any other important information</label>
+                <textarea id="additionalNotes" placeholder="Anything else the installation team should know..."></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousSection(5)">← Back</button>
+                <button class="btn-add" onclick="nextSection(5)">Next: Review & Submit →</button>
+            </div>
+        </div>
+
+        <!-- Section 6: Review & Submit -->
+        <div class="card section-hidden" id="section6">
+            <h2 class="section-title">Review & Submit</h2>
+            <p class="section-description">Review your measurement workbook before submitting</p>
+
+            <div class="alert-success">
+                <strong>✓ Almost Done!</strong> Please review all information below. You can go back to any section to make changes.
+            </div>
+
+            <div id="summaryContent"></div>
+
+            <h3 class="subsection-title">Actions</h3>
+            <div class="button-group">
+                <button class="btn-secondary" onclick="previousSection(6)">← Back to Edit</button>
+                <button class="btn-generate" onclick="exportData()">📥 Download Workbook Data</button>
+                <button class="btn-print" onclick="window.print()">🖨️ Print Workbook</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
